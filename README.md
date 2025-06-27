@@ -3,7 +3,8 @@
 
 <div align="center">
   <kbd>
-    <img src="![alt text]([Screenshot 2025-06-28 014803.png](https://github.com/HuuTrienVN/browser_automation/blob/main/Screenshot%202025-06-28%20014803.png))
+    <![image](https://github.com/user-attachments/assets/98b88f7c-0266-4e28-84e9-985f340e0c9d)
+
 " />
   </kbd>
 </div>
