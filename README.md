@@ -1,4 +1,4 @@
-# Browser_automation
+# Browser Automation
 
 ![Image](https://github.com/user-attachments/assets/c88beea4-955c-4670-b70f-2a98ab1b3e62)
 
