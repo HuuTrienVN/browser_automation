@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Browser Automation App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .timezone-display {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            color: #667eea;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .scheduling-method {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .method-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .method-option.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .method-option h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .method-option p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .delay-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .delay-input input {
+            flex: 1;
+        }
+
+        .delay-input select {
+            flex: 1;
+        }
+
+        .datetime-section {
+            display: none;
+        }
+
+        .datetime-section.active {
+            display: block;
+        }
+
+        .datetime-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-container {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-nav {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .calendar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            padding: 10px;
+            font-weight: 600;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .calendar-day:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .calendar-day.today {
+            background: rgba(102, 126, 234, 0.2);
+            font-weight: 600;
+        }
+
+        .calendar-day.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+
+        .timezone-selector {
+            margin-bottom: 15px;
+        }
+
+        .url-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 15px;
+            background: #fff;
+        }
+
+        .url-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .url-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .url-text {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .url-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .start-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .status.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .active-tasks {
+            margin-top: 30px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-url {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .task-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .bulk-actions .btn {
+            flex: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1> 👈👉 Hẹn Giờ Mở Trình Duyệt Tự Động</h1>
+            <p>TriểnChill - https://www.facebook.com/huutrien.chill/</p>
+        </div>
+
+        <div class="timezone-display" id="timezoneDisplay">
+            Thời Gian Hiện Tại: <span id="currentTime"></span> | Timezone: <span id="currentTimezone"></span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('scheduler')">Hẹn giờ</button>
+            <button class="tab" onclick="switchTab('manager')">Quản Lý URL</button>
+            <button class="tab" onclick="switchTab('tasks')">Quản lý tác vụ</button>
+        </div>
+
+        <!-- Scheduler Tab -->
+        <div id="scheduler" class="tab-content active">
+            <form id="schedulerForm">
+                <div class="form-group">
+                    <label for="singleUrl">Nhập Link Để Hen Giờ 1 Lần</label>
+                    <input 
+                        type="url" 
+                        id="singleUrl" 
+                        placeholder="https://bexuanmikelonton.com"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Cách Thức Hẹn Giờ</label>
+                    <div class="scheduling-method">
+                        <div class="method-option active" onclick="selectMethod('delay')">
+                            <h3>⏱️Thời Gian Delay</h3>
+                            <p>Mở Trình Duyệt Sau Một Khoảng Thời Gian</p>
+                        </div>
+                        <div class="method-option" onclick="selectMethod('datetime')">
+                            <h3>📅 Mở Vào Thời Gian Nhất Định</h3>
+                            <p>Hoạt Động Vào Chính Xác Ngày Giờ Đã Định</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delay Method -->
+                <div id="delaySection" class="delay-section">
+                    <div class="form-group">
+                        <label>Thời Gian Delay</label>
+                        <div class="delay-input">
+                            <input 
+                                type="number" 
+                                id="delayAmount" 
+                                min="0" 
+                                value="5" 
+                                required
+                            >
+                            <select id="delayUnit">
+                                <option value="seconds">Giây</option>
+                                <option value="minutes">Phút</option>
+                                <option value="hours">Giờ</option>
+                                <option value="days">Ngày</option>
+                                <option value="weeks">Tuần</option>
+                                <option value="months">Tháng</option>
+                                <option value="years">Năm</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DateTime Method -->
+                <div id="datetimeSection" class="datetime-section">
+                    <div class="form-group timezone-selector">
+                        <label for="timezoneSelect">Timezone</label>
+                        <select id="timezoneSelect">
+                            <option value="local">🏠 Local Machine Time</option>
+                            <option value="Asia/Hong_Kong">🇭🇰 Hong Kong (GMT+8)</option>
+                            <option value="Asia/Ho_Chi_Minh">🇻🇳 Hanoi/Ho Chi Minh (GMT+7)</option>
+                            <option value="UTC">🌍 UTC (GMT+0)</option>
+                            <option value="America/New_York">🇺🇸 New York (EST/EDT)</option>
+                            <option value="Europe/London">🇬🇧 London (GMT/BST)</option>
+                            <option value="Asia/Tokyo">🇯🇵 Tokyo (GMT+9)</option>
+                        </select>
+                    </div>
+
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button type="button" class="calendar-nav" onclick="changeMonth(-1)">‹</button>
+                            <div class="calendar-title" id="calendarTitle"></div>
+                            <button type="button" class="calendar-nav" onclick="changeMonth(1)">›</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                    </div>
+
+                    <div class="datetime-inputs">
+                        <div class="form-group">
+                            <label for="scheduleDate">Selected Date</label>
+                            <input type="date" id="scheduleDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="scheduleTime">Time</label>
+                            <input type="time" id="scheduleTime" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="start-btn" id="scheduleBtn">
+                    Schedule Single URL
+                </button>
+            </form>
+
+            <div style="margin: 30px 0; text-align: center; color: #666;">OR</div>
+
+            <div class="bulk-actions">
+                <button type="button" class="btn btn-primary" onclick="scheduleAllUrls()">
+                    Đặt Lịch với tất cả URLs đã lưu
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="launchAllUrls()">
+                    Mở Tất Cả URLs Ngay Lập Tức
+                </button>
+            </div>
+        </div>
+
+        <!-- URL Manager Tab -->
+        <div id="manager" class="tab-content">
+            <div class="form-group">
+                <label for="newUrl">Thêm URL Mới Vào Danh Sách</label>
+                <input 
+                    type="url" 
+                    id="newUrl" 
+                    placeholder="https://bexuanmikelonton.com"
+                >
+                <button type="button" class="btn btn-primary" onclick="addUrl()" style="margin-top: 10px;">
+                    Thêm URL
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label for="bulkUrls">Thêm Nhiều URLs (one per line)</label>
+                <textarea 
+                    id="bulkUrls" 
+                    rows="5" 
+                    placeholder="https://google.com&#10;https://youtube.com&#10;https://github.com"
+                ></textarea>
+                <button type="button" class="btn btn-primary" onclick="addBulkUrls()" style="margin-top: 10px;">
+                    Thêm Tất Cả URLs Vào Danh Sách
+                </button>
+            </div>
+
+            <div class="bulk-actions">
+                <button type="button" class="btn btn-secondary" onclick="exportUrls()">
+                    Xuất Danh Sách URLs
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="importUrls()">
+                    Nhập Danh Sách URLs
+                </button>
+                <button type="button" class="btn btn-danger" onclick="clearAllUrls()">
+                    Xóa Tất Cả!!!! 
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>Danh Sách URLs (<span id="urlCount">0</span>)</label>
+                <div id="urlList" class="url-list">
+                    <div class="empty-state">
+                        No URLs saved yet. Add some URLs above!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Tasks Tab -->
+        <div id="tasks" class="tab-content">
+            <div class="bulk-actions">
+                <button type="button" class="btn btn-danger" onclick="cancelAllTasks()">
+                    Cancel All Tasks
+                </button>
+            </div>
+            
+            <div id="activeTasks" class="active-tasks">
+                <div class="empty-state">
+                    No active tasks. Schedule some URLs to see them here!
+                </div>
+            </div>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <!-- Hidden file input for import -->
+        <input type="file" id="fileInput" accept=".txt,.json" style="display: none;" onchange="handleFileImport(event)">
+    </div>
+
+    <script>
+        let savedUrls = [];
+        let activeTasks = [];
+        let taskIdCounter = 0;
+        let currentSchedulingMethod = 'delay';
+        let currentCalendarDate = new Date();
+        let selectedDate = null;
+
+        // Load saved data on page load
+        window.addEventListener('load', function() {
+            loadSavedUrls();
+            updateUrlDisplay();
+            updateActiveTasksDisplay();
+            updateTimezoneDisplay();
+            updateCalendar();
+            
+            // Set default date and time
+            const now = new Date();
+            const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+            document.getElementById('scheduleDate').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('scheduleTime').value = '09:00';
+        });
+
+        // Update timezone display every second
+        setInterval(updateTimezoneDisplay, 1000);
+
+        function updateTimezoneDisplay() {
+            const timezone = document.getElementById('timezoneSelect').value;
+            const now = new Date();
+            
+            let displayTime;
+            let displayTimezone;
+            
+            if (timezone === 'local') {
+                displayTime = now.toLocaleString();
+                displayTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            } else {
+                displayTime = now.toLocaleString('en-US', { timeZone: timezone });
+                displayTimezone = timezone;
+            }
+            
+            document.getElementById('currentTime').textContent = displayTime;
+            document.getElementById('currentTimezone').textContent = displayTimezone;
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Scheduling method selection
+        function selectMethod(method) {
+            currentSchedulingMethod = method;
+            
+            document.querySelectorAll('.method-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const delaySection = document.getElementById('delaySection');
+            const datetimeSection = document.getElementById('datetimeSection');
+            
+            if (method === 'delay') {
+                delaySection.style.display = 'block';
+                datetimeSection.classList.remove('active');
+            } else {
+                delaySection.style.display = 'none';
+                datetimeSection.classList.add('active');
+            }
+            
+            updateScheduleButtonText();
+        }
+
+        function updateScheduleButtonText() {
+            const btn = document.getElementById('scheduleBtn');
+            if (currentSchedulingMethod === 'delay') {
+                btn.textContent = 'Đặt Lịch Với khoảng Thời Gian Delay';
+            } else {
+                btn.textContent = 'Đặt Lịch Với Khoảng Thời Gian Nhất Định';
+            }
+        }
+
+        // Calendar functions
+        function updateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const calendarTitle = document.getElementById('calendarTitle');
+            
+            const year = currentCalendarDate.getFullYear();
+            const month = currentCalendarDate.getMonth();
+            
+            calendarTitle.textContent = new Date(year, month).toLocaleDateString('en-US', { 
+                month: 'long', 
+                year: 'numeric' 
+            });
+            
+            // Clear calendar
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                calendarGrid.appendChild(header);
+            });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day other-month';
+                const prevMonthDate = new Date(year, month, 0 - (startingDayOfWeek - 1 - i));
+                emptyDay.textContent = prevMonthDate.getDate();
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                const currentDate = new Date(year, month, day);
+                
+                // Mark today
+                if (currentDate.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Mark selected date
+                if (selectedDate && currentDate.toDateString() === selectedDate.toDateString()) {
+                    dayElement.classList.add('selected');
+                }
+                
+                dayElement.onclick = () => selectCalendarDate(currentDate);
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            // Add days from next month to fill the grid
+            const totalCells = calendarGrid.children.length - 7; // Subtract day headers
+            const remainingCells = 42 - totalCells; // 6 rows × 7 days - existing cells
+            
+            for (let day = 1; day <= remainingCells && totalCells < 35; day++) {
+                const nextMonthDay = document.createElement('div');
+                nextMonthDay.className = 'calendar-day other-month';
+                nextMonthDay.textContent = day;
+                calendarGrid.appendChild(nextMonthDay);
+            }
+        }
+
+        function changeMonth(direction) {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + direction);
+            updateCalendar();
+        }
+
+        function selectCalendarDate(date) {
+            selectedDate = date;
+            document.getElementById('scheduleDate').value = date.toISOString().split('T')[0];
+            updateCalendar();
+        }
+
+        // Timezone change handler
+        document.getElementById('timezoneSelect').addEventListener('change', function() {
+            updateTimezoneDisplay();
+        });
+
+        // URL Management
+        function addUrl() {
+            const urlInput = document.getElementById('newUrl');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                showStatus('Please enter a URL', 'error');
+                return;
+            }
+            
+            const formattedUrl = formatUrl(url);
+            
+            if (savedUrls.includes(formattedUrl)) {
+                showStatus('URL already exists in the list', 'error');
+                return;
+            }
+            
+            savedUrls.push(formattedUrl);
+            urlInput.value = '';
+            updateUrlDisplay();
+            saveUrls();
+            showStatus('URL added successfully', 'success');
+        }
+
+        function addBulkUrls() {
+            const bulkInput = document.getElementById('bulkUrls');
+            const urls = bulkInput.value.split('\n').filter(url => url.trim());
+            
+            if (urls.length === 0) {
+                showStatus('Please enter at least one URL', 'error');
+                return;
+            }
+            
+            let addedCount = 0;
+            urls.forEach(url => {
+                const formattedUrl = formatUrl(url.trim());
+                if (formattedUrl && !savedUrls.includes(formattedUrl)) {
+                    savedUrls.push(formattedUrl);
+                    addedCount++;
+                }
+            });
+            
+            bulkInput.value = '';
+            updateUrlDisplay();
+            saveUrls();
+            showStatus(`Added ${addedCount} URLs successfully`, 'success');
+        }
+
+        function removeUrl(index) {
+            savedUrls.splice(index, 1);
+            updateUrlDisplay();
+            saveUrls();
+            showStatus('URL removed', 'success');
+        }
+
+        function launchUrl(url) {
+            try {
+                window.open(url, '_blank');
+                showStatus(`Launched: ${url}`, 'success');
+            } catch (error) {
+                showStatus(`Failed to launch: ${error.message}`, 'error');
+            }
+        }
+
+        function clearAllUrls() {
+            if (confirm('Are you sure you want to clear all saved URLs?')) {
+                savedUrls = [];
+                updateUrlDisplay();
+                saveUrls();
+                showStatus('All URLs cleared', 'success');
+            }
+        }
+
+        function exportUrls() {
+            if (savedUrls.length === 0) {
+                showStatus('No URLs to export', 'error');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(savedUrls, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'danh-sach-urls.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            showStatus('URLs exported successfully', 'success');
+        }
+
+        function importUrls() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedUrls = JSON.parse(e.target.result);
+                    
+                    if (Array.isArray(importedUrls)) {
+                        let addedCount = 0;
+                        importedUrls.forEach(url => {
+                            if (typeof url === 'string' && !savedUrls.includes(url)) {
+                                savedUrls.push(url);
+                                addedCount++;
+                            }
+                        });
+                        
+                        updateUrlDisplay();
+                        saveUrls();
+                        showStatus(`Imported ${addedCount} URLs successfully`, 'success');
+                    } else {
+                        showStatus('Định Dạng File Không Hợp Lệ', 'error');
+                    }
+                } catch (error) {
+                    // Try plain text format
+                    const urls = e.target.result.split('\n').filter(url => url.trim());
+                    let addedCount = 0;
+                    
+                    urls.forEach(url => {
+                        const formattedUrl = formatUrl(url.trim());
+                        if (formattedUrl && !savedUrls.includes(formattedUrl)) {
+                            savedUrls.push(formattedUrl);
+                            addedCount++;
+                        }
+                    });
+                    
+                    if (addedCount > 0) {
+                        updateUrlDisplay();
+                        saveUrls();
+                        showStatus(`Imported ${addedCount} URLs successfully`, 'success');
+                    } else {
+                        showStatus('Không Có URLs Hợp Lệ', 'error');
+                    }
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Scheduling
+        document.getElementById('schedulerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const url = document.getElementById('singleUrl').value.trim();
+            
+            if (!url) {
+                showStatus('Chưa Nhập URLs', 'error');
+                return;
+            }
+            
+            const formattedUrl = formatUrl(url);
+            
+            if (currentSchedulingMethod === 'delay') {
+                const delayAmount = parseInt(document.getElementById('delayAmount').value);
+                const delayUnit = document.getElementById('delayUnit').value;
+                const delayMs = convertToMilliseconds(delayAmount, delayUnit);
+                
+                scheduleUrl(formattedUrl, delayMs, delayAmount, delayUnit, 'delay');
+            } else {
+                const scheduleDate = document.getElementById('scheduleDate').value;
+                const scheduleTime = document.getElementById('scheduleTime').value;
+                const timezone = document.getElementById('timezoneSelect').value;
+                
+                if (!scheduleDate || !scheduleTime) {
+                    showStatus('Please select both date and time', 'error');
+                    return;
+                }
+                
+                const targetDateTime = createTargetDateTime(scheduleDate, scheduleTime, timezone);
+                const now = new Date();
+                
+                if (targetDateTime <= now) {
+                    showStatus('Selected time must be in the future', 'error');
+                    return;
+                }
+                
+                const delayMs = targetDateTime.getTime() - now.getTime();
+                scheduleUrl(formattedUrl, delayMs, null, null, 'datetime', targetDateTime);
+            }
+            
+            document.getElementById('singleUrl').value = '';
+        });
+
+        function createTargetDateTime(dateStr, timeStr, timezone) {
+            const dateTime = new Date(`${dateStr}T${timeStr}`);
+            
+            if (timezone === 'local') {
+                return dateTime;
+            } else {
+                // Convert to selected timezone
+                const utcTime = new Date(dateTime.toLocaleString('en-US', {timeZone: 'UTC'}));
+                const targetTime = new Date(dateTime.toLocaleString('en-US', {timeZone: timezone}));
+                const offset = utcTime.getTime() - targetTime.getTime();
+                return new Date(dateTime.getTime() + offset);
+            }
+        }
+
+        function scheduleAllUrls() {
+            if (savedUrls.length === 0) {
+                showStatus('No saved URLs to schedule', 'error');
+                return;
+            }
+            
+            if (currentSchedulingMethod === 'delay') {
+                const delayAmount = parseInt(document.getElementById('delayAmount').value);
+                const delayUnit = document.getElementById('delayUnit').value;
+                const delayMs = convertToMilliseconds(delayAmount, delayUnit);
+                
+                savedUrls.forEach(url => {
+                    scheduleUrl(url, delayMs, delayAmount, delayUnit, 'delay');
+                });
+            } else {
+                const scheduleDate = document.getElementById('scheduleDate').value;
+                const scheduleTime = document.getElementById('scheduleTime').value;
+                const timezone = document.getElementById('timezoneSelect').value;
+                
+                if (!scheduleDate || !scheduleTime) {
+                    showStatus('Please select both date and time', 'error');
+                    return;
+                }
+                
+                const targetDateTime = createTargetDateTime(scheduleDate, scheduleTime, timezone);
+                const now = new Date();
+                
+                if (targetDateTime <= now) {
+                    showStatus('Selected time must be in the future', 'error');
+                    return;
+                }
+                
+                const delayMs = targetDateTime.getTime() - now.getTime();
+                
+                savedUrls.forEach((url, index) => {
+                    // Stagger launches by 1 second each
+                    const staggeredDelay = delayMs + (index * 1000);
+                    const staggeredDateTime = new Date(targetDateTime.getTime() + (index * 1000));
+                    scheduleUrl(url, staggeredDelay, null, null, 'datetime', staggeredDateTime);
+                });
+            }
+        }
+
+        function launchAllUrls() {
+            if (savedUrls.length === 0) {
+                showStatus('No saved URLs to launch', 'error');
+                return;
+            }
+            
+            savedUrls.forEach(url => {
+                setTimeout(() => launchUrl(url), Math.random() * 1000); // Stagger launches
+            });
+            
+            showStatus(`Launching ${savedUrls.length} URLs...`, 'success');
+        }
+
+        function scheduleUrl(url, delayMs, delayAmount, delayUnit, method, targetDateTime = null) {
+            const taskId = ++taskIdCounter;
+            const startTime = Date.now();
+            const endTime = startTime + delayMs;
+            
+            const task = {
+                id: taskId,
+                url: url,
+                startTime: startTime,
+                endTime: endTime,
+                delayAmount: delayAmount,
+                delayUnit: delayUnit,
+                method: method,
+                targetDateTime: targetDateTime,
+                timeout: null
+            };
+            
+            task.timeout = setTimeout(() => {
+                launchUrl(url);
+                removeTask(taskId);
+            }, delayMs);
+            
+            activeTasks.push(task);
+            updateActiveTasksDisplay();
+            
+            let statusMessage;
+            if (method === 'delay') {
+                const timeString = `${delayAmount} ${delayUnit}`;
+                statusMessage = `Scheduled ${url} to launch in ${timeString}`;
+            } else {
+                statusMessage = `Scheduled ${url} to launch at ${targetDateTime.toLocaleString()}`;
+            }
+            
+            showStatus(statusMessage, 'success');
+        }
+
+        function cancelTask(taskId) {
+            const taskIndex = activeTasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                clearTimeout(activeTasks[taskIndex].timeout);
+                activeTasks.splice(taskIndex, 1);
+                updateActiveTasksDisplay();
+                showStatus('Task cancelled', 'success');
+            }
+        }
+
+        function cancelAllTasks() {
+            if (activeTasks.length === 0) {
+                showStatus('No active tasks to cancel', 'error');
+                return;
+            }
+            
+            if (confirm(`Cancel all ${activeTasks.length} active tasks?`)) {
+                activeTasks.forEach(task => clearTimeout(task.timeout));
+                activeTasks = [];
+                updateActiveTasksDisplay();
+                showStatus('All tasks cancelled', 'success');
+            }
+        }
+
+        function removeTask(taskId) {
+            const taskIndex = activeTasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                activeTasks.splice(taskIndex, 1);
+                updateActiveTasksDisplay();
+            }
+        }
+
+        // Utility functions
+        function formatUrl(url) {
+            if (!url) return '';
+            if (!url.match(/^https?:\/\//)) {
+                return 'https://' + url;
+            }
+            return url;
+        }
+
+        function convertToMilliseconds(amount, unit) {
+            const conversions = {
+                seconds: 1000,
+                minutes: 60 * 1000,
+                hours: 60 * 60 * 1000,
+                days: 24 * 60 * 60 * 1000,
+                weeks: 7 * 24 * 60 * 60 * 1000,
+                months: 30 * 24 * 60 * 60 * 1000, // Approximate
+                years: 365 * 24 * 60 * 60 * 1000 // Approximate
+            };
+            
+            return amount * conversions[unit];
+        }
+
+        function formatTimeRemaining(endTime, method, targetDateTime) {
+            const now = Date.now();
+            const remaining = endTime - now;
+            
+            if (remaining <= 0) return 'Launching...';
+            
+            if (method === 'datetime' && targetDateTime) {
+                return `Launch at: ${targetDateTime.toLocaleString()}`;
+            }
+            
+            const seconds = Math.floor(remaining / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            const months = Math.floor(days / 30);
+            const years = Math.floor(days / 365);
+            
+            if (years > 0) return `${years}y ${days % 365}d remaining`;
+            if (months > 0) return `${months}mo ${days % 30}d remaining`;
+            if (days > 0) return `${days}d ${hours % 24}h remaining`;
+            if (hours > 0) return `${hours}h ${minutes % 60}m remaining`;
+            if (minutes > 0) return `${minutes}m ${seconds % 60}s remaining`;
+            return `${seconds}s remaining`;
+        }
+
+        // Display updates
+        function updateUrlDisplay() {
+            const urlList = document.getElementById('urlList');
+            const urlCount = document.getElementById('urlCount');
+            
+            urlCount.textContent = savedUrls.length;
+            
+            if (savedUrls.length === 0) {
+                urlList.innerHTML = '<div class="empty-state">Chưa Có URLs!!</div>';
+                return;
+            }
+            
+            urlList.innerHTML = savedUrls.map((url, index) => `
+                <div class="url-item">
+                    <div class="url-text">${url}</div>
+                    <div class="url-actions">
+                        <button class="btn btn-secondary" onclick="launchUrl('${url}')">Mở URLs</button>
+                        <button class="btn btn-danger" onclick="removeUrl(${index})">Xóa</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateActiveTasksDisplay() {
+            const tasksContainer = document.getElementById('activeTasks');
+            
+            if (activeTasks.length === 0) {
+                tasksContainer.innerHTML = '<div class="empty-state">No active tasks. Schedule some URLs to see them here!</div>';
+                return;
+            }
+            
+            tasksContainer.innerHTML = activeTasks.map(task => `
+                <div class="task-item">
+                    <div class="task-info">
+                        <div class="task-url">${task.url}</div>
+                        <div class="task-time">${formatTimeRemaining(task.endTime, task.method, task.targetDateTime)}</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="cancelTask(${task.id})">Cancel</button>
+                </div>
+            `).join('');
+        }
+
+        // Update active tasks display every second
+        setInterval(updateActiveTasksDisplay, 1000);
+
+        // Storage functions
+        function saveUrls() {
+            // Store in memory only (no localStorage as per restrictions)
+            // In a real environment, you could use localStorage here
+        }
+
+        function loadSavedUrls() {
+            // Load from memory only (no localStorage as per restrictions)
+            // In a real environment, you could load from localStorage here
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize scheduling method
+        updateScheduleButtonText();
+    </script>
+</body>
+</html>
