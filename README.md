@@ -46,7 +46,9 @@ Chỉ cần tài File và chạy trên trình duyệt, không cần cài đặt 
     
 -Sau khi lập được các urls mong muốn có thể chọn giữa 2 cách hẹn giờ là Delay hoặc Theo 
 
-# LƯU Ý
+# LƯU Ý về việc có an toàn hay không.  
+
+-Trước đây có một đợt shadowban khi dùng phần mềm của Youtuber nước ngoài là vì phần mềm đó truy cập vào tài khoản của người dùng, đánh lừa web lolesport và xem tất cả các giải có thể. Còn phần mềm này chỉ có tác dụng hẹn giờ và mở trình duyệt dựa trên các urls được người dùng sưu tầm nói chung (bán tự động). Sau khi mở xong tab để xem giải thì sẽ không tác động gì vào tài khoản hoặc lolesport.
 
 -Tool chỉ có tác dụng hẹn giờ để tự mở trang web, không tác động bất cứ thứ gì đến tài khoản cá nhân cũng như không yêu cầu cung cấp tài khoản.  
 
