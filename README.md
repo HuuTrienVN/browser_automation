@@ -4,8 +4,7 @@
 
 
 # Download
-[Tool](https://github.com/HuuTrienVN/browser_automation/blob/main/browser_automation.html) Tự Động Mở Trình Duyệt  
-[Danh Sách](https://github.com/HuuTrienVN/browser_automation/blob/main/browser_automation.html) Links xem giải đấu (chưa đầy đủ, sẽ bổ xung sau hoặc người dùng có thể tự sưu tầm, điều chỉnh)
+Nhấn vào [Đây](https://github.com/HuuTrienVN/browser_automation/releases/download/v1.0.0/Browser.Automation.zip) Để Tải
 
 # Mô Tả
 
