@@ -27,8 +27,12 @@ HTML
 -Mở https://lolesports.com/ và đăng nhập vào tài khoảng RIOT bạn muốn nhận thưởng.  
 -Vào phần cài đặt chọn tiếng Anh.   
 -Preferred video provider => Twitch.  
--Khi hẹn giờ nên chọn giờ trễ hơn lịch được công bố trên web một tí. Ví dụ theo lịch là 2h thì hãy đặt 2h15. Nếu hẹn giờ quá sớm nhưng luồng livestream chưa bắt đầu thì web sẽ tự quay về trang chủ và không được tính đang xem giải.
 
+-Lý do: Nếu để ngôn ngữ là Tiếng Việt thì web sẽ thường xuyên đẩy sang luồng Stream LOL Esport VN trên YT. Nếu xem bằng YT sẽ có khoảng 40% khả năng trình duyệt không tự động bắt đầu xem Stream dẫn đến không nhận được drops.
+Cách hoạt động của phần mềm là hẹn giờ để mở web xem giải. Tuyệt đối không truy cập, không yêu cầu thông tin tài khoản hoặc tác động đến tài khoản cá nhân và không tác động đến web lolesport, không tác động đến game Riot nói chung.
+
+
+-Khi hẹn giờ nên chọn giờ trễ hơn lịch được công bố trên web một tí. Ví dụ theo lịch là 2h thì hãy đặt 2h15. Nếu hẹn giờ quá sớm nhưng luồng livestream chưa bắt đầu thì web sẽ tự quay về trang chủ và không được tính đang xem giải.
 
 # Cài Đặt
 
@@ -44,7 +48,7 @@ Chỉ cần tài File và chạy trên trình duyệt, không cần cài đặt 
     
 -Danh sách urls cũng có thể được xuất ra cho tiện việc lưu trữ.  
     
--Sau khi lập được các urls mong muốn có thể chọn giữa 2 cách hẹn giờ là Delay hoặc Theo 
+-Sau khi lập được các urls mong muốn có thể chọn giữa 2 cách hẹn giờ là Delay hoặc Theo Thời gian đã định.  
 
 # LƯU Ý về việc có an toàn hay không.  
 
