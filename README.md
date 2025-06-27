@@ -3,7 +3,7 @@
 
 <div align="center">
   <kbd>
-    <img src="![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+    <img src="![alt text](Screenshot 2025-06-28 014803.png)
 " />
   </kbd>
 </div>
