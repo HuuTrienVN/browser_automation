@@ -1,71 +1,50 @@
-# browser_automation
+# Browser_automation
 
+![Image](https://github.com/user-attachments/assets/c88beea4-955c-4670-b70f-2a98ab1b3e62)
 
-<div align="center">
-  <kbd>
-    <![image](https://github.com/user-attachments/assets/98b88f7c-0266-4e28-84e9-985f340e0c9d)
-  </kbd>
-</div>
+## Mô Tả
 
-## Description
+Tự đông mở LOL Esports theo lịch tùy chỉnh.
 
-Longer description explaining the rationale/intent behind the project, what it's good for, and how it works. If the next two subsections are short enough, they can be merged up into this block—perhaps as bulleted lists.
+### Tính Năng
 
-### Features
-
-- It's TINY. A short README is a good README.
-- List other standout qualities that'll make a potential user want to try out your project.
-
+Hẹn giờ mở LOL ESports dựa trên danh sách đã cung cấp.
+Hẹn giờ theo thời gian delay hoặc thời gian nhất định.
 ### Built with
 
-- Markdown
-- Love
+HTML
 
-## Getting started
+## Bắt Đầu
 
-### Prerequisites
+### Yêu Cầu
 
-Dependencies not explicitly covered in the installation process; e.g., OS restrictions.
+-Mở https://lolesports.com/ và đăng nhập vào tài khoảng RIOT bạn muốn nhận thưởng.  
+-Vào phần cài đặt chọn tiếng Anh.   
+-Preferred video provider => Twitch.
 
-### Install
 
-Ideally, write a script whose usage is described here.
+### Cài Đặt
 
-### Configure
+Chỉ cần tài File và chạy trên trình duyệt, không cần cài đặt.
 
-Manual, context-specific tasks not covered in the installation process.
+### Hướng Dẫn Sử Dụng
 
-### Usage
+-Vì cách hoạt động của LOL Esports là URLs để xem giải đấu là không thay đổi, nên chỉ cần lưu lại các đường dẫn của các giải đấu tương ứng, khi đến thời gian, mở đúng đường dẫn là sẽ lập tức xem được.  
+  
+-Ví dụ giải đấu MSI 2025: https://lolesports.com/live/msi  
+    
+-Lập danh sách các giải đấu muốn xem, lưu thành file txt để nhập nhanh vào tool.  
+    
+-Danh sách urls cũng có thể được xuất ra cho tiện việc lưu trữ.  
+    
+-Sau khi lập được các urls mong muốn có thể chọn giữa 2 cách hẹn giờ là Delay hoặc Theo 
 
-GIFs are useful here to see the project in action.
+### LƯU Ý
 
-### Troubleshooting
+-Tool chỉ có tác dụng hẹn giờ để tự mở trang web, không tác động bất cứ thứ gì đến tài khoản cá nhân cũng như không yêu cầu cung cấp tài khoản.  
 
-Or FAQs, if that's more appropriate.
+-Sau khi mở trang web để xem giải, kết thúc tác vụ được hẹn giờ phần mềm sẽ không tác động thêm bất cứ thứ gì đến web lolesports và tài khoản cá nhân.
 
-## Back matter
+-Tỉ lệ drops là ngẫu nhiên, hoặc dựa trên các sự kiện đặc biệt sẽ drops nên đừng hỏi vì sao xem mãi không drops vì đó không phải là lỗi.
 
-### Legal disclaimer
-
-Usage of this tool for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state, and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
-
-### Acknowledgements
-
-Thanks to all who helped inspire this template.
-
-### See also
-
-- [A simple README.md template](https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc)
-- [A template to make good README.md](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-- [A sample README for all your GitHub projects](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
-- [A simple README.md template to kickstart projects](https://github.com/me-and-company/readme-template)
-
-### To-do
-
-- [ ] Still need to do this
-- [ ] ~~Decided not to do this~~
-- [x] Done!
-
-### License
-
-This project is licensed under the [MIT License](LICENSE.md).
+-Drops sẽ được gửi thằng vào tài khoản Riot đã đăng nhập, không cần thao tác gì thêm.
