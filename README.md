@@ -26,7 +26,8 @@ HTML
 
 -Mở https://lolesports.com/ và đăng nhập vào tài khoảng RIOT bạn muốn nhận thưởng.  
 -Vào phần cài đặt chọn tiếng Anh.   
--Preferred video provider => Twitch.
+-Preferred video provider => Twitch.  
+-Khi hẹn giờ nên chọn giờ trễ hơn lịch được công bố trên web một tí. Ví dụ theo lịch là 2h thì hãy đặt 2h15. Nếu hẹn giờ quá sớm nhưng luồng livestream chưa bắt đầu thì web sẽ tự quay về trang chủ và không được tính đang xem giải.
 
 
 # Cài Đặt
