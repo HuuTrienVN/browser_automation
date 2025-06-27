@@ -4,8 +4,6 @@
 <div align="center">
   <kbd>
     <![image](https://github.com/user-attachments/assets/98b88f7c-0266-4e28-84e9-985f340e0c9d)
-
-" />
   </kbd>
 </div>
 
